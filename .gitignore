@@ -1,0 +1,4 @@
+kitchen-sink/
+.ipynb_checkpoints/
+.*~
+.*#

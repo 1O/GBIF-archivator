@@ -1,0 +1,71 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+	"parentEventID" : {"type" : "string"},
+	"eventID" : {"type" : "string"},
+	"siteNestingDescription" : {"type" : "string"},
+	"higherGeographyID" : {"type" : "string"},
+	"locationID" : {"type" : "string"},
+	"verbatimSiteDescriptions" : {"type" : "string"},
+	"verbatimSiteNames" : {"type" : "string"},
+	"locality" : {"type" : "string"},
+	"country" : {"type" : "string"},
+	"countryCode": {"$ref": "#/$defs/countryCode"},
+	"decimalLongitude" : {"type" : "number", "minimum" : -180, "maximum" : 180},
+	"decimalLatitude" : {"type" : "number", "minimum" : -90, "maximum": 90},
+	"footprintWKT" : {"type" : "string"},
+	"geodeticDatum" : {"type" : "string"},
+	"minimumElevationInMeters" : {"type" : "number", "minimum": -10935},
+	"maximumElevationInMeters" : {"type" : "number", "maximum": 8849},
+	"eventDate" : {
+	    "$comment": "ISO 8601 date",
+	    "type" : "string",
+	    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+	},
+	"eventType" : {"type" : "string"},
+	"samplingProtocol" : {"type" : "string"},
+	"protocolDescriptions" : {"type" : "string"},
+	"protocolReferences" : {"type" : "string"},
+	"siteCount" : {"$ref" : "#/$defs/posInt"},
+	"sampleSizeValue" : {"$ref" : "#/$defs/posInt"},
+	"sampleSizeUnit" : {"type" : "string"},
+	"totalAreaSampledValue" : {"type" : "number"},
+	"totalAreaSampledUnit" : {"type" : "string"},
+	"targetTaxonomicScope" : {"type" : "string"},
+	"isAbsenceReported" : {"type" : "boolean"},
+	"isAbundanceReported" : {"type" : "boolean"},
+	"hasNonTargetTaxa" : {"type" : "boolean"},
+	"license" : {"type" : "string"}
+    },
+    "required": [
+	"siteID", 
+	"decimalLongitude",
+	"decimallatitude",
+	"countryCode",
+	"eventDate"
+    ],
+    "$defs": {
+	"posInt": {"type" : "integer", "minimum" : 1},
+	"countryCode": {
+	    "enum": [
+		"AD","AE","AF","AG","AI","AL","AM","AO","AQ","AR","AS","AT","AU","AW","AX","AZ","BA","BB","BD","BE",
+		"BF","BG","BH","BI","BJ","BL","BM","BN","BO","BQ","BR","BS","BT","BV","BW","BY","BZ","CA","CC","CD",
+		"CF","CG","CH","CI","CK","CL","CM","CN","CO","CR","CU","CV","CW","CX","CY","CZ","DE","DJ","DK","DM",
+		"DO","DZ","EC","EE","EG","EH","ER","ES","ET","FI","FJ","FK","FM","FO","FR","GA","GB","GD","GE","GF",
+		"GG","GH","GI","GL","GM","GN","GP","GQ","GR","GS","GT","GU","GW","GY","HK","HM","HN","HR","HT","HU",
+		"ID","IE","IL","IM","IN","IO","IQ","IR","IS","IT","JE","JM","JO","JP","KE","KG","KH","KI","KM","KN",
+		"KP","KR","KW","KY","KZ","LA","LB","LC","LI","LK","LR","LS","LT","LU","LV","LY","MA","MC","MD","ME",
+		"MF","MG","MH","MK","ML","MM","MN","MO","MP","MQ","MR","MS","MT","MU","MV","MW","MX","MY","MZ","NA",
+		"NC","NE","NF","NG","NI","NL","NO","NP","NR","NU","NZ","OM","PA","PE","PF","PG","PH","PK","PL","PM",
+		"PN","PR","PS","PT","PW","PY","QA","RE","RO","RS","RU","RW","SA","SB","SC","SD","SE","SG","SH","SI",
+		"SJ","SK","SL","SM","SN","SO","SR","SS","ST","SV","SX","SY","SZ","TC","TD","TF","TG","TH","TJ","TK",
+		"TL","TM","TN","TO","TR","TT","TV","TW","TZ","UA","UG","UM","US","UY","UZ","VA","VC","VE","VG","VI",
+		"VN","VU","WF","WS","YE","YT","ZA","ZM","ZW"
+	    ]
+	}
+    }
+}
+
+
+

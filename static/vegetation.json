@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+        "siteID": {"type": "string"},
+        "decimalLongitude": {"type": "number", "minimum": -90, "maximum": 90},
+	"decimalLatitude": {"type": "number", "minimum": -180, "maximum": 180}
+    },
+    "required": ["siteID", "decimalLongitude", "decimallatitude"]
+}

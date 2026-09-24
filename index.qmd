@@ -1,0 +1,111 @@
+---
+title: "CSV validation to create GBIF archives"
+format: 
+  html:
+    toc: true
+    code-fold: true
+    self-contained: true
+---
+
+
+[Intro to GBIF Archives](https://ipt.gbif.org/manual/en/ipt/latest/dwca-guide)
+
+
+# prelude
+
+```python
+import csv, json
+import polars as pl ## fast pandas
+## pydantic_jsonschema enables class creation from external .json file:
+from pydantic_jsonschema import Schema, to_model
+```
+
+
+Specify which validation model should be used, and where to find
+the file with the corresponding schema:
+
+```python
+## 'model name': {'path': 'path_to_json_schema'}
+models = {
+    'EventCore': {'path': 'static/event_core.json'},
+    'Releve': {'path': 'static/releve.json'}
+}
+```
+
+# create validator
+
+Select desired schema (couldn't get interactivity 
+to work in Jupyter yet):
+
+```python
+## use this model (schema) vor validation:
+model_name='EventCore'
+```
+
+
+Load the JSON schema from file and convert it to validation
+model class used by `pydantic`:
+
+```python
+## create validation model "my_model" from external JSONschema:
+with open(models[model_name]['path'], 'r') as file:
+    my_model = to_model(
+        Schema.model_validate(json.load(file)),
+        model_name=model_name
+    )
+```
+
+# CSV import
+
+Create polars dataframe from CSV file. At this point, we can specify
+the datatypes of given columns (or trust automatic type inference
+by `polars.read_csv`):
+
+```python
+## read in CSV for rowwise validation,
+df = polars.read_csv(
+    source = 'static/data.csv',
+    ## override automatic datatyping like so:
+    schema_overrides = {
+        "decimalLatitude": polars.datatypes.Float16,
+        "decimalLongitude": polars.datatypes.Float16
+    },
+    ## set values which cannot be converted to desired
+    ## datatype to null (have validation catch them later):
+    ignore_errors = True
+)
+```
+
+# define validation helper
+
+```python
+## validate a given df row against chosen schema:
+def validate (row):
+    try:
+        my_model.model_validate(row)
+        return "OK"
+    except ValueError as e:
+        errors = e.errors()
+        locs = [error["loc"][0] for error in errors]
+        msgs = [error["msg"] for error in errors]
+        return ";".join([": ".join(b) for b in zip(locs, msgs)])
+
+```
+
+# validate dataframe
+
+```python
+## validate df rowwise:
+validation=[validate(row) for row in df.iter_rows(named = True)]
+```
+
+
+```python
+## add validation results as last column:
+df.replace_column(
+    df.shape[1]-1,
+    pl.Series("validation", validation)
+)
+```
+
+

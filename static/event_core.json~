@@ -1,0 +1,48 @@
+{
+    "type": "object",
+    "properties": {
+	"parentEventID" : {"type" : "string"},
+	"eventID" : {"type" : "string"},
+	"siteNestingDescription" : {"type" : "string"},
+	"higherGeographyID" : {"type" : "string"},
+	"locationID" : {"type" : "string"},
+	"verbatimSiteDescriptions" : {"type" : "string"},
+	"verbatimSiteNames" : {"type" : "string"},
+	"locality" : {"type" : "string"},
+	"country" : {"type" : "string"},
+	"countryCode" : {"type" : "string"},
+	"decimalLongitude" : {"type" : "number", "minimum" : -180, "maximum" : 180},
+	"decimalLatitude" : {"type" : "number", "minimum" : -90, "maximum": 90},
+	"footprintWKT" : {"type" : "string"},
+	"geodeticDatum" : {"type" : "string"},
+	"minimumElevationInMeters" : {"type" : "number", "minimum": -10935},
+	"maximumElevationInMeters" : {"type" : "number", "maximum": 8849},
+	"eventDate" : {
+	    "type" : "number",
+	    "$comment" : "ISO 8601 datetime (without milliseconds):",
+	    "pattern": "^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)$"
+	},
+	"eventType" : {"type" : "string"},
+	"samplingProtocol" : {"type" : "string"},
+	"protocolDescriptions" : {"type" : "string"},
+	"protocolReferences" : {"type" : "string"},
+	"siteCount" : {"type" : "number"},
+	"sampleSizeValue" : {"type" : "number"},
+	"sampleSizeUnit" : {"type" : "string"},
+	"totalAreaSampledValue" : {"type" : "number"},
+	"totalAreaSampledUnit" : {"type" : "string"},
+	"targetTaxonomicScope" : {"type" : "string"},
+	"isAbsenceReported" : {"type" : "boolean"},
+	"isAbundanceReported" : {"type" : "boolean"},
+	"hasNonTargetTaxa" : {"type" : "boolean"},
+	"license" : {"type" : "string"}
+    },
+    "required": [
+	"siteID", 
+	"decimalLongitude",
+	"decimallatitude"
+    ]
+}
+
+
+
